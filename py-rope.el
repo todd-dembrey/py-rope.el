@@ -13,10 +13,16 @@
 ;;; Code:
 
 ;;;###autoload
-(defun py-rope-test ()
-  "Print a message."
-  (interactive)
-  (message "%s" (projectile-project-root))
+(defun py-rope-test (beginning end)
+  "Extract a variable."
+  (interactive "r")
+  (message "%s" (buffer-file-name))
+  (call-process "python" nil t t "./el_rope.py"
+                (projectile-project-root)
+                (buffer-file-name)
+                (number-to-string beginning)
+                (number-to-string end)
+                )
 )
 
 (provide 'py-rope)
