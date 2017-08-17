@@ -13,15 +13,15 @@
 ;;; Code:
 
 ;;;###autoload
-(defun py-rope-test (beginning end)
+(defun py-rope-extract-variable (new-variable-name beginning end)
   "Extract a variable."
-  (interactive "r")
-  (message "%s" (buffer-file-name))
+  (interactive "sNew Variable Name: \nr")
   (call-process "python" nil t t "./el_rope.py"
                 (projectile-project-root)
                 (buffer-file-name)
                 (number-to-string beginning)
                 (number-to-string end)
+                new-variable-name
                 )
 )
 
