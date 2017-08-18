@@ -12,10 +12,20 @@
 
 ;;; Code:
 
+(require 'epc)
+
+;; (defvar rope-server-command (epc:start-epc "python" '("rope_server.py")))
+
+(defun rope:start-server ()
+  (if (not (boundp 'rope:epc))
+    (setq rope:epc (epc:start-epc "python" '("rope_server.py")))))
+
 ;;;###autoload
 (defun py-rope-extract-variable (new-variable-name beginning end)
   "Extract a variable."
   (interactive "sNew Variable Name: \nr")
+  (rope:start-server)
+  (epc:call-sync rope:epc 'echo '10)
   (call-process "python" nil t t "./el_rope.py"
                 (projectile-project-root)
                 (buffer-file-name)
